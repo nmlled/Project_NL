@@ -24,4 +24,15 @@
         android:onClick="sendEmailTo"
         android:text="@string/gps" />
 
+     <Button
+         android:id="@+id/btn_take_photo"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/locationBtn"
+         android:layout_below="@+id/locationBtn"
+         android:layout_marginLeft="15dp"
+         android:layout_marginTop="21dp"
+         android:onClick="sendEmailTo"
+         android:text="@string/fotografia" />
+
 </RelativeLayout>

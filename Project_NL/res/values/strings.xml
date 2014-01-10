@@ -5,5 +5,6 @@
     <string name="action_settings">Settings</string>
     <string name="sample_data">Latitude</string>
     <string name="gps">Obter Coordenadas</string>
+    <string name="fotografia">Fotografia</string>
 
 </resources>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Camera;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,8 +15,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
+
+
+
 public class MainActivity extends Activity {
 
+	
+	private Camera camera;
 	private TextView coordinatesView;
     private LocationManager locationManager;
     //private boolean validCoordinates = false;
@@ -52,7 +58,6 @@ public class MainActivity extends Activity {
 	            		coordinatesView.setText(String.valueOf(loc.getLatitude()));
 	            }
 	    });
-	    
 	    /*
 	    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000 * 60 * 5, 1, 
 	    		new LocationListener() {
@@ -84,6 +89,23 @@ public class MainActivity extends Activity {
 						
 					}});
 		*/
+	    
+	     
+	    // capture button
+        findViewById(R.id.btn_take_photo).setOnClickListener(new OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                                camera.takePicture(null, null, new PictureCallback() {
+                                        @Override
+                                        public void onPictureTaken(byte[] data, Camera camera) {
+                                                createPopup(data);
+                                                camera.startPreview();
+                                        }
+                                });
+                        }
+                });
+	    
+	   
 	}
 	
 
