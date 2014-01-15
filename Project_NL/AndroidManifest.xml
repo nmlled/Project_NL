@@ -7,8 +7,8 @@
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="18" />
-    
-     <!-- Location Permissions Required -->
+
+    <!-- Location Permissions Required -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -27,6 +27,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+		<activity 
+		    android:name="com.example.project_nl.MainActivity2"
+		    ></activity>
+        <service
+            android:name="com.example.project_nl.StoreSpeciesInfoService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>
