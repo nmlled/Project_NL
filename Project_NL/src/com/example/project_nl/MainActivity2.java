@@ -1,6 +1,10 @@
 package com.example.project_nl;
 
 import java.util.Date;
+
+import com.example.project_nl.Model.Photo;
+import com.example.project_nl.Providers.PhotoManager;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -22,19 +26,19 @@ import android.widget.Toast;
  * 
  * @author Challenge.IT
  */
-public class MainActivity2 extends Activity implements SurfaceHolder.Callback {
+/* public class MainActivity2 extends Activity implements SurfaceHolder.Callback {
     
     private Camera camera;
     private SurfaceView surfaceView;
     private SurfaceHolder surfaceHolder;
     private final int CAMERA_NUMBER = 1;
-    //private PhotoManager manager;
+    private PhotoManager manager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    	/*
+    	
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
         setTitle(R.string.main_title);
         manager = new PhotoManager(this);
         
@@ -53,18 +57,18 @@ public class MainActivity2 extends Activity implements SurfaceHolder.Callback {
                         }
                 });
         // list button
-        findViewById(R.id.btn_list).setOnClickListener(new OnClickListener() {
+       /* findViewById(R.id.btn_list).setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
                                 startActivity(new Intent(MainActivity.this, PhotosListActivity.class));
                         }
-                });
+                });*/
         
         // surface settings
-        surfaceView = (SurfaceView) findViewById(R.id.surfaceview);
+/*        surfaceView = (SurfaceView) findViewById(R.id.surfaceview);
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
-        */
+        
     }
 
     //This is called immediately after any structural changes (format or size) have been made to the surface.
@@ -76,25 +80,25 @@ public class MainActivity2 extends Activity implements SurfaceHolder.Callback {
     //This is called immediately after the surface is first created.
     @Override
     public void surfaceCreated(SurfaceHolder holder) {    
-    	/*
+    	
             try
             {
                     camera = Camera.open();
             }
             catch(RuntimeException e)
             {
-                    Toast.makeText(MainActivity.this, R.string.camera_error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity2.this, R.string.camera_error, Toast.LENGTH_SHORT).show();
                     return;
             }
-            setCameraDisplayOrientation(MainActivity.this, CAMERA_NUMBER, camera);
+            setCameraDisplayOrientation(MainActivity2.this, CAMERA_NUMBER, camera);
             try {
                     camera.setPreviewDisplay(surfaceHolder);
                     //camera.startPreview();
             } catch (Exception e) {
-                    Toast.makeText(MainActivity.this, R.string.camera_prev_error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity2.this, R.string.camera_prev_error, Toast.LENGTH_SHORT).show();
                     return;
             }
-            */
+            
     }
 
     //This is called immediately before a surface is being destroyed.
@@ -106,7 +110,7 @@ public class MainActivity2 extends Activity implements SurfaceHolder.Callback {
         camera.release();
         camera = null;
         */
-    }
+/*    }
     
     /**
      * Code available at: 
@@ -116,7 +120,7 @@ public class MainActivity2 extends Activity implements SurfaceHolder.Callback {
      * @param cameraId
      * @param camera
      */
-    private static void setCameraDisplayOrientation(Activity activity,
+/*    private static void setCameraDisplayOrientation(Activity activity,
             int cameraId, android.hardware.Camera camera) {
         android.hardware.Camera.CameraInfo info =
                 new android.hardware.Camera.CameraInfo();
@@ -145,9 +149,9 @@ public class MainActivity2 extends Activity implements SurfaceHolder.Callback {
      * This method builds a popup window to user type the name and description of the photo
      * @param photo
      */
-    private void createPopup(final byte[] photo)
+/*    private void createPopup(final byte[] photo)
     {
-    	/*
+    	
             // Get the layout inflater
         LayoutInflater inflater = getLayoutInflater();
         
@@ -181,6 +185,6 @@ public class MainActivity2 extends Activity implements SurfaceHolder.Callback {
                 // create and show popup
                 AlertDialog alertDialog = adBuilder.create();
                 alertDialog.show();
-		*/
+		
     }
-}
+}*/
