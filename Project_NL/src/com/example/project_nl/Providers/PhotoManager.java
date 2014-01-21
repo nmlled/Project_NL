@@ -1,10 +1,10 @@
 package com.example.project_nl.Providers;
 
 import java.util.ArrayList;
+import com.example.project_nl.Model.Photo;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.provider.ContactsContract.CommonDataKinds.Photo;
 
 /**
  * This class manages the access to database table Photo.
@@ -40,7 +40,7 @@ public class PhotoManager {
          * This method returns all photos saved persistently
          * @return list of photos saved in database
          */
-/*        public ArrayList<Photo> getAll(){
+       public ArrayList<Photo> getAll(){
                 Cursor cursor = context.getContentResolver().query(PhotoProvider.CONTENT_URI, null, null, null, null);
                 ArrayList<Photo> photos = new ArrayList<Photo>();
                 //iterate all records and save then in array list
@@ -55,5 +55,5 @@ public class PhotoManager {
                 }
                 cursor.close();
                 return photos;
-        }*/
+        }
 }

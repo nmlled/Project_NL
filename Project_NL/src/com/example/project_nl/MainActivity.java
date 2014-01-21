@@ -1,11 +1,8 @@
 package com.example.project_nl;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Camera;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -24,21 +21,37 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity implements LocationListener {
 	
-	//private Camera camera;
 	private TextView viewLatitude;
 	private TextView viewLongitude;
 	private EditText speciesName;
-    private LocationManager locationManager;
     private Button speciesGuarda;
-    ///
-    private String provider;
+
+    private LocationManager locationManager;
+    private String bestProvider;
     
     private Location lastLocation = null;
 
     private void updateUI()
     {
-		viewLatitude.setText(String.valueOf(lastLocation.getLatitude()));  
-		viewLongitude.setText(String.valueOf(lastLocation.getLongitude())); 
+		Log.i("Testes", "updateUI");
+    	if(lastLocation == null)
+    	{
+	        viewLatitude.setText("Localização não disponível");
+	        viewLongitude.setText("Localização não disponível");
+    	}
+    	else {
+    		viewLatitude.setText(String.valueOf(lastLocation.getLatitude()));  
+    		viewLongitude.setText(String.valueOf(lastLocation.getLongitude()));
+    	}
+    }
+    
+    private void updateBestLocationProvider()
+    {
+	    bestProvider = locationManager.getBestProvider(new Criteria(), false);
+	    lastLocation = locationManager.getLastKnownLocation(bestProvider);
+	    updateUI();
+	    if (lastLocation != null)
+	    	Log.i("Testes", "Provider " + bestProvider + " seleccionado.");
     }
 	
 	@Override
@@ -47,8 +60,6 @@ public class MainActivity extends Activity implements LocationListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		
-		
 		viewLatitude = (TextView) findViewById(R.id.viewLatitude);
 		viewLongitude = (TextView) findViewById(R.id.viewLongitude);
 		speciesName = (EditText) findViewById(R.id.editText1);
@@ -56,18 +67,8 @@ public class MainActivity extends Activity implements LocationListener {
 		
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		
-		///
-		Criteria criteria = new Criteria();
-	    provider = locationManager.getBestProvider(criteria, false);
-	    Location location = locationManager.getLastKnownLocation(provider);
-	    ///
-	    if (location != null) {
-	        System.out.println("Provider " + provider + " seleccionado.");
-	        onLocationChanged(location);
-	      } else {
-	        viewLatitude.setText("Localização não disponível");
-	        viewLongitude.setText("Localização não disponível");
-	      }
+		updateBestLocationProvider();
+	    onLocationChanged(lastLocation);
 		
 		// - location button
 	    findViewById(R.id.locationBtn).setOnClickListener(new OnClickListener() {                
@@ -75,19 +76,8 @@ public class MainActivity extends Activity implements LocationListener {
 	            public void onClick(View v) {
 					Log.i("Testes", "Click Obter");
 	            	// Obtain coordinates
-					
-					//List<String> providers = locationManager.getAllProviders();
-					List<String> providers = locationManager.getProviders(true);
-					
-					for(String provider : providers)
-						Log.i("Testes", provider);
-					
-					if(lastLocation == null)
-					{
-						lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		            	if(lastLocation != null)
-		            		updateUI();
-					}
+					lastLocation = locationManager.getLastKnownLocation(bestProvider);
+					updateUI();
 	            }
 	    });
 	     
@@ -96,7 +86,7 @@ public class MainActivity extends Activity implements LocationListener {
         	 @Override
 	            public void onClick(View v) {
 					Log.i("Testes", "Click Foto");
-					//startActivity(new Intent(MainActivity.this,MainActivity2.class));
+					startActivity(new Intent(MainActivity.this,CameraActivity.class));
                 }
         });
 	
@@ -134,7 +124,6 @@ public class MainActivity extends Activity implements LocationListener {
 			}
         });
         
-        
         speciesGuarda.setClickable(false);
 	}
 	
@@ -142,15 +131,7 @@ public class MainActivity extends Activity implements LocationListener {
     protected void onResume()
     {
 		super.onResume();
-		///
-		locationManager.requestLocationUpdates(provider, 400, 1, this);
-		// start location updates requests
-		/*if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
-		{
-			Log.i("Testes", "Registered Listener");
-			locationManager.requestLocationUpdates(
-					LocationManager.GPS_PROVIDER, 1000 * 10, 1, this);
-		}*/
+		locationManager.requestLocationUpdates(bestProvider, 400, 1, this);
     }
     
     @Override
@@ -173,36 +154,28 @@ public class MainActivity extends Activity implements LocationListener {
 	@Override
 	public void onLocationChanged(Location location) 
 	{
-		/*Toast.makeText(this, "Location", Toast.LENGTH_LONG).show();
+		Toast.makeText(this, "Location changed", Toast.LENGTH_LONG).show();
 		Log.i("Testes", "Location changed");
-    	if(location != null)
-    	{
-    		lastLocation = location;
-    		updateUI();
-    	}*/
-		///
-		int lat = (int) (location.getLatitude());
-	    int lng = (int) (location.getLongitude());
-	    viewLatitude.setText(String.valueOf(lat));
-	    viewLongitude.setText(String.valueOf(lng));
+		lastLocation = location;
+		updateUI();
 	}
 
 
 	@Override
 	public void onProviderDisabled(String provider) 
 	{
-		///
 		Toast.makeText(this, "Disabled provider " + provider,
 		        Toast.LENGTH_LONG).show();
+		updateBestLocationProvider();
 	}
 
 
 	@Override
 	public void onProviderEnabled(String provider) 
 	{
-		///
 		Toast.makeText(this, "Enabled new provider " + provider,
 		        Toast.LENGTH_LONG).show();
+		updateBestLocationProvider();
 	}
 
 

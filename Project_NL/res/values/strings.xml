@@ -10,5 +10,8 @@
     <string name="gps">Obter</string>
     <string name="guardar">Guardar</string>
     <string name="fotografia">Foto</string>
+    <string name="camera_error">Erro ao aceder à camera</string>
+    <string name="camera_prev_error">Erro ao aceder à camera</string>
+    
 
 </resources>
