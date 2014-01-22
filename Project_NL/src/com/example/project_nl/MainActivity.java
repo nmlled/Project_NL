@@ -24,7 +24,7 @@ public class MainActivity extends Activity implements LocationListener {
 	private TextView viewLatitude;
 	private TextView viewLongitude;
 	private EditText speciesName;
-    private Button speciesGuarda;
+  
 
     private LocationManager locationManager;
     private String bestProvider;
@@ -63,7 +63,6 @@ public class MainActivity extends Activity implements LocationListener {
 		viewLatitude = (TextView) findViewById(R.id.viewLatitude);
 		viewLongitude = (TextView) findViewById(R.id.viewLongitude);
 		speciesName = (EditText) findViewById(R.id.editText1);
-		speciesGuarda = (Button) findViewById(R.id.save);
 		
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		
@@ -86,45 +85,21 @@ public class MainActivity extends Activity implements LocationListener {
         	 @Override
 	            public void onClick(View v) {
 					Log.i("Testes", "Click Foto");
-					startActivity(new Intent(MainActivity.this,CameraActivity.class));
+					if (!speciesName.getText().toString().trim().equals("")){
+					Intent intent = new Intent(MainActivity.this,CameraActivity.class);
+					intent.putExtra("specie", speciesName.getText());
+					intent.putExtra("lat", viewLatitude.getText());
+					intent.putExtra("lon", viewLongitude.getText());
+					startActivity(intent);
+					}
                 }
         });
 	
-        // save button
-        speciesGuarda.setOnClickListener(new OnClickListener() {
-        	@Override
-            public void onClick(View v) {
-				Log.i("Testes", "Click Guardar");
-				Log.i("Testes", speciesName.getText().toString());
-				
-				Species species = new Species(speciesName.getText().toString().trim());
-				if(lastLocation != null)
-					species.appendLocation(lastLocation);
-				
-				// Send info to service
-				Intent intent = new Intent(MainActivity.this, StoreSpeciesInfoService.class); 
-				intent.putExtra(StoreSpeciesInfoService.STORE_ACTION_EXTRAS, species); 
-				startService(intent);
-        	}
-        });
+ 
         
-        speciesName.setOnKeyListener(new View.OnKeyListener() {
-
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if(event.getAction() == KeyEvent.ACTION_UP)
-				{
-					Log.i("Testes", "Key UP");
-					boolean saveButtonEnabled = false;
-					String content = speciesName.getText().toString();
-					saveButtonEnabled = !content.trim().equals("");
-					speciesGuarda.setClickable(saveButtonEnabled);
-				}
-				return false;
-			}
-        });
+       
         
-        speciesGuarda.setClickable(false);
+       
 	}
 	
     @Override

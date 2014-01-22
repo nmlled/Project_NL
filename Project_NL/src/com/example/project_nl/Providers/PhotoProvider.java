@@ -20,7 +20,7 @@ import android.net.Uri;
 public class PhotoProvider extends ContentProvider
 {
         // The authority that identifies this content provider in Android.
-        public static final String AUTHORITY = "pt.challenge_it.camera_android.providers.photoprovider";        
+        public static final String AUTHORITY = "com.example.project_nl.Providers.photoprovider";        
         // The content: scheme identifies the URI as a content URI pointing to an Android content provider.
         public static final Uri CONTENT_URI = Uri.parse(ContentResolver.SCHEME_CONTENT + "://" + AUTHORITY);        
         
@@ -29,8 +29,8 @@ public class PhotoProvider extends ContentProvider
         private static final int LOCATION_ID  = 1;
         private static final int LOCATION_ALL = 2;
         
-        private static final String MIME_ALL = "vnd.android.cursor.dir/vnd.pt.challenge_it.camera_android.providers." + PhotoContract.TABLE;
-        private static final String MIME_ONE = "vnd.android.cursor.item/vnd.pt.challenge_it.camera_android.providers." + PhotoContract.TABLE;
+        private static final String MIME_ALL = "vnd.android.cursor.dir/vnd.com.example.project_nl.Providers." + PhotoContract.TABLE;
+        private static final String MIME_ONE = "vnd.android.cursor.item/vnd.com.example.project_nl.Providers." + PhotoContract.TABLE;
         
         // DB Helper instance for access to SQLite DB.
         private SQLiteOpenHelper helper;

@@ -86,22 +86,23 @@
     
     
 
-    <Button
+    <!--  <Button
         android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/TextView01"
         android:layout_marginBottom="47dp"
-        android:text="@string/guardar" />
+        android:text="@string/guardar" />-->
 
     <ImageButton
         android:id="@+id/photo"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/locationBtn"
-        android:layout_alignTop="@+id/save"
+        android:layout_alignLeft="@+id/locationBtn"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="64dp"
         android:src="@android:drawable/ic_menu_gallery"
         android:text="@string/fotografia" />
 

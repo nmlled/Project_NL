@@ -1,13 +1,17 @@
 package com.example.project_nl;
 
 import java.util.Date;
+import java.util.List;
 
 import com.example.project_nl.Model.Photo;
+import com.example.project_nl.Providers.DataContract;
+import com.example.project_nl.Providers.DataProvider;
 import com.example.project_nl.Providers.PhotoManager;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.Camera;
@@ -33,7 +37,12 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 	private SurfaceView surfaceView;
 	private SurfaceHolder surfaceHolder;
 	private final int CAMERA_NUMBER = 0;
-	//private PhotoManager manager;
+	private PhotoManager manager;
+	private String speciesName;
+	private double viewLatitude;
+	private double viewLongitude;
+	
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
@@ -41,7 +50,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_camera);
 		setTitle(R.string.app_name);
-		//manager = new PhotoManager(this);
+		manager = new PhotoManager(this);
 
 		//setup button listeners
 		// capture button
@@ -58,18 +67,20 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 			}
 		});
 		
-		// list button
-		findViewById(R.id.btn_list).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				//startActivity(new Intent(CameraActivity.this, PhotosListActivity.class));
-			}
-		});
+		
 
 		// surface settings
 		surfaceView = (SurfaceView) findViewById(R.id.surfaceview);
 		surfaceHolder = surfaceView.getHolder();
+		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		surfaceHolder.addCallback(this);
+		
+		//get intent extras
+		speciesName = getIntent().getStringExtra("specie");
+		viewLatitude = getIntent().getDoubleExtra("lat", 0);
+		viewLongitude = getIntent().getDoubleExtra("lon", 0);
+		
+		
 	}
 
 	//This is called immediately after any structural changes (format or size) have been made to the surface.
@@ -93,7 +104,9 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 			return;
 		}
 		setCameraDisplayOrientation(CameraActivity.this, CAMERA_NUMBER, camera);
+		
 		try {
+			
 			camera.setPreviewDisplay(surfaceHolder);
 			camera.startPreview();
 		} catch (Exception e) {
@@ -151,7 +164,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 	 */
 	private void createPopup(final byte[] photo)
 	{
-		/*
+		
             // Get the layout inflater
         LayoutInflater inflater = getLayoutInflater();
 
@@ -172,19 +185,19 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
         adBuilder.setPositiveButton(getString(R.string.btn_submit),
                         new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                        EditText editName = (EditText) view.findViewById(R.id.edit_name);
-                        EditText editDesc = (EditText) view.findViewById(R.id.edit_desc);
-                        manager.save(new Photo(photo,
-                                                 editDesc.getText().toString().isEmpty() ? getString(R.string.default_desc) : editDesc.getText().toString(),
-                                                 editName.getText().toString().isEmpty() ? getString(R.string.default_name) : editName.getText().toString(),
-                                                 new Date()
-                                        ));
+                     ContentValues valores = new ContentValues();
+                     valores.put(DataContract.SPECIE, speciesName);
+                     valores.put(DataContract.LATITUDE, viewLatitude);
+                     valores.put(DataContract.LONGITUDE, viewLongitude);
+                     valores.put(DataContract.PHOTO, photo);
+                     getContentResolver().insert(DataProvider.CONTENT_URI, valores);
+                       
                 }
         });
 
         // create and show popup
         AlertDialog alertDialog = adBuilder.create();
         alertDialog.show();
-		*/
+		
 	}
 }

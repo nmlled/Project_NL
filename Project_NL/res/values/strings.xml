@@ -12,6 +12,12 @@
     <string name="fotografia">Foto</string>
     <string name="camera_error">Erro ao aceder à camera</string>
     <string name="camera_prev_error">Erro ao aceder à camera</string>
-    
+    <string name="label_name">Name</string>
+    <string name="label_desc">Description</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="btn_submit">Submeter</string>
+    <string name="popup_title">Gravar</string>
+    <string name="default_name">default name</string>
+    <string name="default_desc">default desc</string>
 
 </resources>

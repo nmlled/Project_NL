@@ -38,6 +38,16 @@
             android:name="com.example.project_nl.StoreSpeciesInfoService"
             android:exported="false" >
         </service>
+        
+    
+
+        <provider 
+           android:name="com.example.project_nl.Providers.DataProvider"
+           android:authorities="com.example.project_nl.Providers.DataProvider"/>
+        
+        <provider android:name="com.example.project_nl.Providers.PhotoProvider"
+                  android:authorities="com.example.project_nl.Providers.photoprovider" 
+                  android:exported="false" />
     </application>
 
 </manifest>
